@@ -1,6 +1,6 @@
 resource "aws_security_group" "back" {
-  name        = "Back SG"
-  description = "Allow web"
+  name        = "Wintermute Straylight SG"
+  description = "Allow web and ntopng"
   vpc_id      = aws_vpc.kiddie.id
 
   ingress {
@@ -19,6 +19,14 @@ resource "aws_security_group" "back" {
     cidr_blocks = [aws_subnet.public.cidr_block]
   }
 
+  ingress {
+    description = "Allow HTTP ntopng from public"
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = [aws_subnet.public.cidr_block]
+  }
+
   egress {
     from_port        = 0
     to_port          = 0
@@ -30,16 +38,16 @@ resource "aws_security_group" "back" {
   tags = merge(
     var.tags,
     map(
-      "Name", "Back"
+      "Name", "Wintermute Straylight"
     )
   )
 }
 
-#resource "aws_spot_instance_request" "dc9" {
-resource "aws_instance" "back" {
-  ami = local.dc9_ami
-  #spot_price    = var.dc9_spot_price
-  instance_type = local.dc9_instance_type
+#resource "aws_spot_instance_request" "wintermute_straylight" {
+resource "aws_instance" "wintermute_straylight" {
+  ami = local.wintermute_straylight_ami
+  #spot_price    = var.wintermute_straylight_spot_price
+  instance_type = local.wintermute_straylight_instance_type
   key_name      = var.key_name
 
   subnet_id                   = aws_subnet.private.id
@@ -49,7 +57,7 @@ resource "aws_instance" "back" {
   tags = merge(
     var.tags,
     map(
-      "Name", "Back"
+      "Name", "Wintermute Straylight"
     )
   )
 }
