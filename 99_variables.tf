@@ -32,3 +32,9 @@ variable key_name {
   default     = "kiddie"
   description = "Kiddie PubKey Name for Management"
 }
+
+variable local_privkey_path {
+  type        = string
+  default     = "~/.ssh/kiddie.id_rsa"
+  description = "Kiddie PubKey Name for Management"
+}
