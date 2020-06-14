@@ -35,6 +35,7 @@ output "ansibleinventory" {
               ansible_ssh_private_key_file = var.local_privkey_path
               ansible_ssh_common_args      = "-o ProxyCommand=\"ssh -o StrictHostKeyChecking=no -W %h:%p -i ${var.local_privkey_path} -q ec2-user@${aws_instance.dc9.public_ip}\""
               ansible_python_interpreter   = "python3"
+              postfix_mynetworks           = [aws_subnet.public.cidr_block, aws_subnet.private.cidr_block]
             }
           }
         }
