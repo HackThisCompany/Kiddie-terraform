@@ -1,4 +1,4 @@
-resource "aws_security_group" "back" {
+resource "aws_security_group" "wintermute_straylight" {
   name        = "Wintermute Straylight SG"
   description = "Allow web and ntopng"
   vpc_id      = aws_vpc.kiddie.id
@@ -27,6 +27,14 @@ resource "aws_security_group" "back" {
     cidr_blocks = [aws_subnet.public.cidr_block]
   }
 
+  ingress {
+    description = "Allow SMTP from public"
+    from_port   = 25
+    to_port     = 25
+    protocol    = "tcp"
+    cidr_blocks = [aws_subnet.public.cidr_block]
+  }
+
   egress {
     from_port        = 0
     to_port          = 0
@@ -51,7 +59,7 @@ resource "aws_instance" "wintermute_straylight" {
   key_name      = var.key_name
 
   subnet_id                   = aws_subnet.private.id
-  vpc_security_group_ids      = [aws_security_group.back.id]
+  vpc_security_group_ids      = [aws_security_group.wintermute_straylight.id]
   associate_public_ip_address = false
 
   tags = merge(
