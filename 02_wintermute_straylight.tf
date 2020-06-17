@@ -51,16 +51,19 @@ resource "aws_security_group" "wintermute_straylight" {
   )
 }
 
-#resource "aws_spot_instance_request" "wintermute_straylight" {
-resource "aws_instance" "wintermute_straylight" {
-  ami = local.wintermute_straylight_ami
-  #spot_price    = var.wintermute_straylight_spot_price
-  instance_type = local.wintermute_straylight_instance_type
+#resource "aws_instance" "wintermute_straylight" {
+resource "aws_spot_instance_request" "wintermute_straylight" {
+  ami           = local.wintermute_straylight_ami
+  spot_price    = var.wintermute_straylight_spot_price
+  instance_type = var.wintermute_straylight_instance_type
   key_name      = var.key_name
 
   subnet_id                   = aws_subnet.private.id
   vpc_security_group_ids      = [aws_security_group.wintermute_straylight.id]
   associate_public_ip_address = false
+
+  wait_for_fulfillment = true
+  spot_type            = "one-time"
 
   tags = merge(
     var.tags,

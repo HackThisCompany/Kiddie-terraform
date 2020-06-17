@@ -42,16 +42,19 @@ resource "aws_security_group" "dc9" {
   )
 }
 
-#resource "aws_spot_instance_request" "dc9" {
-resource "aws_instance" "dc9" {
-  ami = local.dc9_ami
-  #spot_price    = var.dc9_spot_price
-  instance_type = local.dc9_instance_type
+#resource "aws_instance" "dc9" {
+resource "aws_spot_instance_request" "dc9" {
+  ami           = local.dc9_ami
+  spot_price    = var.dc9_spot_price
+  instance_type = var.dc9_instance_type
   key_name      = var.key_name
 
   subnet_id                   = aws_subnet.public.id
   vpc_security_group_ids      = [aws_security_group.dc9.id]
   associate_public_ip_address = true
+
+  wait_for_fulfillment = true
+  spot_type            = "one-time"
 
   tags = merge(
     var.tags,
