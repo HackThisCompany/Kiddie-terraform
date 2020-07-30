@@ -50,7 +50,7 @@ variable dc9_instance_type {
 variable dc9_spot_price {
   type = string
   # Spot price = 0.0204 * (1- 0.67) = 0.006732
-  default     = "0.008"
+  default     = "0.01"
   description = "DC-9 spot instance price threshold"
 }
 
@@ -64,6 +64,6 @@ variable wintermute_straylight_instance_type {
 variable wintermute_straylight_spot_price {
   type = string
   # Spot price = 0.0204 * (1- 0.67) = 0.006732
-  default     = "0.008"
+  default     = "0.01"
   description = "Wintermute Straylight spot instance price threshold"
 }
