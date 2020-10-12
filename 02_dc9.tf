@@ -54,7 +54,7 @@ resource "aws_spot_instance_request" "dc9" {
   associate_public_ip_address = true
 
   wait_for_fulfillment = true
-  spot_type            = "one-time"
+  #spot_type            = "one-time"
 
   tags = merge(
     var.tags,

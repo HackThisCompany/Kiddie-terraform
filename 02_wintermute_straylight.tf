@@ -63,7 +63,7 @@ resource "aws_spot_instance_request" "wintermute_straylight" {
   associate_public_ip_address = false
 
   wait_for_fulfillment = true
-  spot_type            = "one-time"
+  #spot_type            = "one-time"
 
   tags = merge(
     var.tags,
